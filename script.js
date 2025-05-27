@@ -72,10 +72,6 @@ async function startAdmin() {
   const offerDesc = new RTCSessionDescription(callData.offer);
   await pc.setRemoteDescription(offerDesc);
 
-  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-  localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
-  localVideo.srcObject = localStream;
-
   const answerDesc = await pc.createAnswer();
   await pc.setLocalDescription(answerDesc);
 
@@ -103,4 +99,8 @@ async function startAdmin() {
   pc.ontrack = e => {
     remoteVideo.srcObject = e.streams[0];
   };
+
+  // Do NOT get local media for admin
+  // Do NOT show localVideo for admin
 }
+
